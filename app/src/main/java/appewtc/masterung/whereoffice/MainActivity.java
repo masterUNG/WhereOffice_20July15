@@ -1,9 +1,11 @@
 package appewtc.masterung.whereoffice;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,7 +13,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }   // onCreate
+
+    public void clickBangPee(View view) {
+        myIntent(13.669312, 100.626138);
     }
+
+    public void clickBangna(View view) {
+        myIntent(13.668268, 100.604790);
+    }
+
+    public void clickUdomsuk(View view) {
+
+        myIntent(13.679919, 100.609586);
+
+    }
+
+    private void myIntent(double lat, double lng) {
+
+        Intent objIntent = new Intent(MainActivity.this, MapsActivity.class);
+        objIntent.putExtra("lat", lat);
+        objIntent.putExtra("lng", lng);
+        startActivity(objIntent);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,4 +59,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}
+}   // Main Class
