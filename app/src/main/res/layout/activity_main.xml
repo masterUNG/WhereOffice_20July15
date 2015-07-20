@@ -3,9 +3,170 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="@drawable/wall7">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#32ffffff">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:src="@drawable/build1"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:src="@drawable/build2"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plate1"
+                android:id="@+id/textView"
+                android:textSize="@dimen/h3"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plate2"
+                android:id="@+id/textView2"
+                android:textSize="@dimen/h3"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h1" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView3"
+                android:src="@drawable/build3"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView4"
+                android:src="@drawable/friend"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h2" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/plate3"
+                android:id="@+id/textView3"
+                android:textSize="@dimen/h3"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/plate4"
+                android:id="@+id/textView4"
+                android:textSize="@dimen/h3"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h2"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/lat"
+                android:id="@+id/textView5"
+                android:textSize="@dimen/h3"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="123.123456"
+                android:id="@+id/textView6"
+                android:textSize="@dimen/h3"
+                android:textStyle="bold"
+                android:layout_weight="2"
+                android:layout_gravity="center_vertical"
+                android:gravity="right"
+                android:textColor="@color/text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/h2"
+            android:layout_marginTop="20dp" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/lng"
+                android:id="@+id/textView7"
+                android:textSize="@dimen/h3"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="123.123456"
+                android:id="@+id/textView8"
+                android:textSize="@dimen/h3"
+                android:textStyle="bold"
+                android:layout_weight="2"
+                android:layout_gravity="center_vertical"
+                android:gravity="right"
+                android:textColor="@color/text" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
