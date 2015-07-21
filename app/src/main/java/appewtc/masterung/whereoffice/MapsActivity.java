@@ -1,7 +1,9 @@
 package appewtc.masterung.whereoffice;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -9,6 +11,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MapsActivity extends FragmentActivity {
 
@@ -20,8 +24,14 @@ public class MapsActivity extends FragmentActivity {
             {13.68102594, 100.60990691}, {13.68099466, 100.6082654}, {13.67874298, 100.61234236}};
 
     private LatLng udomsukLatLng, bangnaLatLng, bangpeeLatLng,
-            udomsuk1LatLng, udomsuk2LatLng, udomsuk3LatLng;
+            udomsuk1LatLng, udomsuk2LatLng, udomsuk3LatLng,
+            section1LatLng, section2LatLng, section3LatLng, EWTCLatLng, myLatLng;
 
+    private PolylineOptions redPolylineOptions, blackPolylineOptions, bluePolylineOptions;
+
+    private Double myLatDouble, myLngDouble;
+
+    private PolygonOptions myPolygonOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +43,31 @@ public class MapsActivity extends FragmentActivity {
 
         setUpMapIfNeeded();
     }   // onCreate
+
+    public void clickWhere(View view) {
+
+        Double myRedDouble, myBlackDouble, myBlueDouble;
+
+        myRedDouble = Math.pow((myLatDouble - 13.679919), 2) + Math.pow((myLngDouble - 100.609586), 2);
+        myBlackDouble = Math.pow((myLatDouble - 13.668268), 2) + Math.pow((myLngDouble - 100.604790), 2);
+        myBlueDouble = Math.pow((myLatDouble - 13.669312), 2) + Math.pow((myLngDouble - 100.626138), 2);
+
+        if ((myRedDouble < myBlackDouble) && (myRedDouble < myBlueDouble)) {
+            mMap.addPolyline(redPolylineOptions);
+        }
+
+        if ((myBlackDouble < myRedDouble) && (myBlackDouble < myBlueDouble)) {
+            mMap.addPolyline(blackPolylineOptions);
+        }
+
+        if ((myBlueDouble < myRedDouble) && (myBlueDouble < myBlackDouble)) {
+            mMap.addPolyline(bluePolylineOptions);
+        }
+
+
+
+    }   // clickWhere
+
 
     private void receiveCenter() {
         latCenterADouble = getIntent().getExtras().getDouble("lat");
@@ -69,8 +104,68 @@ public class MapsActivity extends FragmentActivity {
         //Create Maker
         createMaker();
 
+        //Create Polyline
+        createPolyline();
+
+        //Create Polygon
+        createPolyGon();
+
 
     }   // setUpMap
+
+    private void createPolyGon() {
+
+        myPolygonOptions = new PolygonOptions();
+        myPolygonOptions.add(udomsukLatLng)
+                .add(bangnaLatLng)
+                .add(bangpeeLatLng)
+                .add(udomsukLatLng)
+                .strokeWidth(5)
+                .strokeColor(Color.MAGENTA)
+                .fillColor(Color.argb(50, 213, 230, 28));
+        mMap.addPolygon(myPolygonOptions);
+
+    }
+
+    private void createPolyline() {
+
+        //Red Polyline
+        redPolylineOptions = new PolylineOptions();
+        redPolylineOptions.add(myLatLng)
+                .add(udomsukLatLng)
+                .add(section1LatLng)
+                .add(section2LatLng)
+                .add(section3LatLng)
+                .add(EWTCLatLng)
+                .width(10)
+                .color(Color.RED);
+        //mMap.addPolyline(redPolylineOptions);
+
+        //Blue Polyline
+        bluePolylineOptions = new PolylineOptions();
+        bluePolylineOptions.add(myLatLng)
+                .add(section2LatLng)
+                .add(section3LatLng)
+                .add(EWTCLatLng)
+                .width(10)
+                .color(Color.BLUE);
+        //mMap.addPolyline(bluePolylineOptions);
+
+        //Black Polyline
+        blackPolylineOptions = new PolylineOptions();
+        blackPolylineOptions.add(myLatLng)
+                .add(bangnaLatLng)
+                .add(section1LatLng)
+                .add(section2LatLng)
+                .add(section3LatLng)
+                .add(EWTCLatLng)
+                .width(10)
+                .color(Color.BLACK);
+        //mMap.addPolyline(blackPolylineOptions);
+
+
+
+    }   // createPolyline
 
     private void createMaker() {
 
@@ -78,13 +173,19 @@ public class MapsActivity extends FragmentActivity {
         mMap.addMarker(new MarkerOptions()
                 .position(udomsukLatLng)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.build1))
-        .title("สถานีอุดมสุข")
-        .snippet("สถานีรถไฟฟ้าอุดมสุข"));
+                .title("สถานีอุดมสุข")
+                .snippet("สถานีรถไฟฟ้าอุดมสุข"));
 
         mMap.addMarker(new MarkerOptions()
-                .position(udomsuk1LatLng));
+                .position(udomsuk1LatLng)
+                .title("Green")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+
         mMap.addMarker(new MarkerOptions()
-                .position(udomsuk2LatLng));
+                .position(udomsuk2LatLng)
+                .title("Yellow")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+
         mMap.addMarker(new MarkerOptions()
                 .position(udomsuk3LatLng));
 
@@ -92,15 +193,42 @@ public class MapsActivity extends FragmentActivity {
         mMap.addMarker(new MarkerOptions()
                 .position(bangnaLatLng)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.build2))
-        .title("บางนา")
-        .snippet("สถานีรถไฟฟ้า บางนา"));
+                .title("บางนา")
+                .snippet("สถานีรถไฟฟ้า บางนา"));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(13.666218, 100.604281)));
 
         //About Bangpee
         mMap.addMarker(new MarkerOptions()
                 .position(bangpeeLatLng)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.build3))
-        .title("บางพลี")
-        .snippet("เส้นทางที่มาจาก ชลบุรี"));
+                .title("บางพลี")
+                .snippet("เส้นทางที่มาจาก ชลบุรี"));
+
+
+        //my Mobile
+        //รับค่าจาก Intent
+        myLatDouble = getIntent().getExtras().getDouble("mylat");
+        myLngDouble = getIntent().getExtras().getDouble("mylng");
+
+        //สร้างพิกัด บนแผนที่
+        myLatLng = new LatLng(myLatDouble, myLngDouble);
+
+        //สร้าง Maker
+        mMap.addMarker(new MarkerOptions()
+                .position(myLatLng)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.friend))
+                .title("ฉันอยู่นี่")
+                .snippet("ที่นี่ฉันอยู่ ล่าสุด"));
+
+        //For EWTC
+        mMap.addMarker(new MarkerOptions()
+        .position(EWTCLatLng)
+        .icon(BitmapDescriptorFactory.fromResource(R.drawable.logo300))
+        .title("EWTC")
+        .snippet("โรงเรียนสอนแอนดรอยด์ โดย มาสเตอร์ อึ่ง"));
+
+
 
     }   // createMaker
 
@@ -112,6 +240,10 @@ public class MapsActivity extends FragmentActivity {
         udomsuk1LatLng = new LatLng(douLatLng[3][0], douLatLng[3][1]);
         udomsuk2LatLng = new LatLng(douLatLng[4][0], douLatLng[4][1]);
         udomsuk3LatLng = new LatLng(douLatLng[5][0], douLatLng[5][1]);
+        section1LatLng = new LatLng(13.673320, 100.606870);
+        section2LatLng = new LatLng(13.665834, 100.644356);
+        section3LatLng = new LatLng(13.669587, 100.624315);
+        EWTCLatLng = new LatLng(13.666835, 100.623328);
 
     }   // setUpLatLng
 
